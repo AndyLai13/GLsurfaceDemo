@@ -2,12 +2,15 @@ package com.andylai.glsurfacedemo;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ActivityManager;
 import android.content.Context;
+import android.content.pm.ConfigurationInfo;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.util.Log;
 
 import com.andylai.glsurfacedemo.GLShape.Polygon;
 
@@ -24,6 +27,13 @@ public class MainActivity extends AppCompatActivity {
 //		setContentView(R.layout.activity_main);
 		MyGLSurfaceView glSurfaceView = new MyGLSurfaceView(this);
 		setContentView(glSurfaceView);
+
+		ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+		ConfigurationInfo configurationInfo = activityManager.getDeviceConfigurationInfo();
+
+		Log.d("Andy", "" + Double.parseDouble(configurationInfo.getGlEsVersion()));
+		Log.d("Andy", "" + (configurationInfo.reqGlEsVersion >= 0x20000));
+		Log.d("Andy", "" + String.format("%X", configurationInfo.reqGlEsVersion));
 	}
 
 	class MyGLSurfaceView extends GLSurfaceView {
